@@ -1,0 +1,45 @@
+[0m01:09:49.144449 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002777836A740>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002777A6644C0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002777A6642E0>]}
+
+
+============================== 01:09:49.144449 | decd9963-c4fa-4931-89a9-b7ca9a53ef94 ==============================
+[0m01:09:49.144449 [info ] [MainThread]: Running with dbt=1.10.15
+[0m01:09:49.154639 [debug] [MainThread]: running dbt with arguments {'profiles_dir': 'C:\\Users\\DELL\\.dbt', 'cache_selected_only': 'False', 'no_print': 'None', 'write_json': 'True', 'use_colors': 'True', 'warn_error': 'None', 'static_parser': 'True', 'partial_parse': 'True', 'log_path': 'logs', 'send_anonymous_usage_stats': 'True', 'indirect_selection': 'eager', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'fail_fast': 'False', 'version_check': 'True', 'use_experimental_parser': 'False', 'quiet': 'False', 'introspect': 'True', 'empty': 'None', 'log_cache_events': 'False', 'debug': 'False', 'log_format': 'default', 'invocation_command': 'dbt deps', 'printer_width': '80', 'target_path': 'None'}
+[0m01:09:49.154639 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\DELL\Desktop\project_ports_dashboard\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m01:09:49.154639 [debug] [MainThread]: Command `dbt deps` failed at 01:09:49.154639 after 0.18 seconds
+[0m01:09:49.161679 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002777836A740>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002777A664DC0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002777A664CD0>]}
+[0m01:09:49.162679 [debug] [MainThread]: Flushing usage events
+[0m01:09:50.136905 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m01:23:09.535132 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F2DAD4E6E0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F2DD048490>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F2DD0482B0>]}
+
+
+============================== 01:23:09.541325 | c19004f7-a818-48e3-b9ec-6392fb0b1b3c ==============================
+[0m01:23:09.541325 [info ] [MainThread]: Running with dbt=1.10.15
+[0m01:23:09.543328 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'target_path': 'None', 'profiles_dir': 'C:\\Users\\DELL\\.dbt', 'log_format': 'default', 'use_colors': 'True', 'warn_error': 'None', 'indirect_selection': 'eager', 'partial_parse': 'True', 'fail_fast': 'False', 'send_anonymous_usage_stats': 'True', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_path': 'logs', 'use_experimental_parser': 'False', 'version_check': 'True', 'quiet': 'False', 'introspect': 'True', 'empty': 'None', 'log_cache_events': 'False', 'debug': 'False', 'no_print': 'None', 'invocation_command': 'dbt deps', 'cache_selected_only': 'False', 'write_json': 'True'}
+[0m01:23:09.544913 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\DELL\Desktop\project_ports_dashboard\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m01:23:09.546907 [debug] [MainThread]: Command `dbt deps` failed at 01:23:09.546907 after 0.14 seconds
+[0m01:23:09.547907 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F2DAD4E6E0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F2DD048D90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F2DD048CA0>]}
+[0m01:23:09.548907 [debug] [MainThread]: Flushing usage events
+[0m01:23:10.535071 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:11:21.521909 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000206D04CE770>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000206D27C8580>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000206D27C83A0>]}
+
+
+============================== 15:11:21.532296 | 97073bd2-5e3c-49fa-b5b5-aa0ae083c6a8 ==============================
+[0m15:11:21.532296 [info ] [MainThread]: Running with dbt=1.10.15
+[0m15:11:21.534301 [debug] [MainThread]: running dbt with arguments {'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\DELL\\.dbt', 'log_format': 'default', 'target_path': 'None', 'use_colors': 'True', 'warn_error': 'None', 'indirect_selection': 'eager', 'fail_fast': 'False', 'log_path': 'logs', 'send_anonymous_usage_stats': 'True', 'partial_parse': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True', 'use_experimental_parser': 'False', 'version_check': 'True', 'introspect': 'True', 'quiet': 'False', 'empty': 'False', 'log_cache_events': 'False', 'debug': 'False', 'no_print': 'None', 'invocation_command': 'dbt run', 'printer_width': '80', 'write_json': 'True'}
+[0m15:11:21.535296 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\DELL\Desktop\project_ports_dashboard\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m15:11:21.538297 [debug] [MainThread]: Command `dbt run` failed at 15:11:21.537296 after 0.34 seconds
+[0m15:11:21.538297 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000206D04CE770>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000206D27C8670>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000206D27C8640>]}
+[0m15:11:21.539882 [debug] [MainThread]: Flushing usage events
+[0m15:11:22.706763 [debug] [MainThread]: An error was encountered while trying to flush usage events

@@ -1,0 +1,13 @@
+ports_dashboard:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: postgres
+      password: postgres
+      port: 5432
+      dbname: ports_dashboard
+      schema: public
+      threads: 1
+      keepalives_idle: 0

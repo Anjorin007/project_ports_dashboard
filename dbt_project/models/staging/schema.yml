@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: public
+    tables:
+      - name: fact_port_traffic
+      - name: dim_port
+      - name: dim_quality_flag

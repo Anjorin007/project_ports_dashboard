@@ -1,0 +1,102 @@
+version: '3.8'
+
+# PHASE 2: PostgreSQL Setup avec Docker
+# Infrastructure pour stockage données portuaires
+
+services:
+  # =========================================================================
+  # PostgreSQL Database Service
+  # =========================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: ports_postgres_db
+    
+    # Configuration
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ports_dashboard
+      POSTGRES_INITDB_ARGS: "-c max_connections=100"
+    
+    # Ports
+    ports:
+      - "5432:5432"
+    
+    # Volumes (persistence)
+    volumes:
+      # Persistance des données
+      - postgres_data:/var/lib/postgresql/data
+      
+      # Script d'initialisation (optionnel)
+      - ./src/database/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    
+    # Health check
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ports_dashboard"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    
+    # Ressources
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    
+    # Network
+    networks:
+      - ports_network
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# =========================================================================
+# Volumes
+# =========================================================================
+volumes:
+  postgres_data:
+    driver: local
+
+# =========================================================================
+# Networks
+# =========================================================================
+networks:
+  ports_network:
+    driver: bridge
+
+# =========================================================================
+# Remarques d'utilisation
+# =========================================================================
+# 
+# Démarrage:
+#   docker-compose up -d
+#
+# Vérification:
+#   docker ps
+#   docker logs ports_postgres_db
+#
+# Arrêt:
+#   docker-compose down
+#
+# Suppression complète (+ données):
+#   docker-compose down -v
+#
+# Connexion PostgreSQL:
+#   psql -h localhost -U postgres -d ports_dashboard
+#   password: postgres
+#
+# Variables d'environnement (.env):
+#   DB_HOST=localhost
+#   DB_PORT=5432
+#   DB_NAME=ports_dashboard
+#   DB_USER=postgres
+#   DB_PASSWORD=postgres

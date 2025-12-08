@@ -1,0 +1,80 @@
+{
+  "timestamp": "2025-12-04T21:04:12.243789",
+  "actions": [
+    {
+      "action": "remove_lagos",
+      "rows_removed": 2,
+      "reason": "Qualité insuffisante (100% ESTIMATED, pas de données officielles NPA)"
+    },
+    {
+      "action": "clean_pac_temporal",
+      "rows_removed": 2,
+      "reason": "GAP temporel énorme (2019, 2023 supprimées). Garder 2024 Q3 VERIFIED",
+      "pac_kept": "2024 Q3 (VERIFIED)",
+      "pac_removed": "2019 (baseline), 2023 (interpolée, trop éloignée)"
+    },
+    {
+      "action": "check_duplicates",
+      "has_duplicates": "False",
+      "duplicate_count": 0
+    }
+  ],
+  "stats_before": {
+    "total_rows": 14,
+    "ports": [
+      "PAC",
+      "TEMA",
+      "LOME",
+      "ABIDJAN",
+      "LAGOS"
+    ],
+    "num_ports": 5,
+    "years": [
+      2019,
+      2020,
+      2022,
+      2023,
+      2024
+    ],
+    "quality_flags": {
+      "VERIFIED": 9,
+      "ESTIMATED": 5
+    },
+    "ports_with_tonnage": [
+      "PAC",
+      "LOME",
+      "ABIDJAN",
+      "LAGOS"
+    ],
+    "ports_with_teus": [
+      "TEMA",
+      "LOME",
+      "ABIDJAN",
+      "LAGOS"
+    ]
+  },
+  "stats_after": {
+    "total_rows": 10,
+    "ports": [
+      "ABIDJAN",
+      "LOME",
+      "PAC",
+      "TEMA"
+    ],
+    "num_ports": 4,
+    "years": [
+      "2020",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "quality_flags": {
+      "VERIFIED": 8,
+      "ESTIMATED": 2
+    },
+    "rows_with_tonnage": 7,
+    "rows_with_teus": 5,
+    "lagos_removed": true,
+    "pac_filtered": true
+  }
+}

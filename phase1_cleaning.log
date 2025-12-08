@@ -1,0 +1,63 @@
+2025-12-04 21:04:12,243 - __main__ - INFO - 
+======================================================================
+2025-12-04 21:04:12,244 - __main__ - INFO - PHASE 1 - NETTOYAGE DATASET
+2025-12-04 21:04:12,244 - __main__ - INFO - ======================================================================
+2025-12-04 21:04:12,300 - __main__ - INFO -   Ports trouvés: 5
+2025-12-04 21:04:12,302 - __main__ - INFO -   Années: [2019, 2020, 2022, 2023, 2024]
+2025-12-04 21:04:12,302 - __main__ - INFO -   Quality flags: {'VERIFIED': 9, 'ESTIMATED': 5}
+2025-12-04 21:04:12,303 - __main__ - INFO - 
+[1/4] Suppression Lagos...
+2025-12-04 21:04:12,309 - __main__ - INFO - 
+[2/4] Nettoyage temporel PAC...
+2025-12-04 21:04:12,322 - __main__ - INFO -   Supprimé: années 2019 (baseline) et 2023 (estimée, gap énorme)
+2025-12-04 21:04:12,323 - __main__ - INFO - 
+[3/4] Vérification duplicatas...
+2025-12-04 21:04:12,335 - __main__ - INFO - 
+[4/4] Enrichissement métadonnées...
+2025-12-04 21:04:12,344 - __main__ - INFO -   - included_in_analysis
+2025-12-04 21:04:12,345 - __main__ - INFO -   - has_tonnage
+2025-12-04 21:04:12,345 - __main__ - INFO -   - has_teus
+2025-12-04 21:04:12,346 - __main__ - INFO -   - clean_date
+2025-12-04 21:04:12,347 - __main__ - INFO -   - analysis_note
+2025-12-04 21:04:12,349 - __main__ - INFO - 
+  Indicateurs disponibles:
+2025-12-04 21:04:12,349 - __main__ - INFO -     - Lignes avec tonnage: 7/10
+2025-12-04 21:04:12,350 - __main__ - INFO -     - Lignes avec TEU: 5/10
+2025-12-04 21:04:12,350 - __main__ - INFO - 
+======================================================================
+2025-12-04 21:04:12,351 - __main__ - INFO - VALIDATION NETTOYAGE
+2025-12-04 21:04:12,351 - __main__ - INFO - ======================================================================
+2025-12-04 21:04:12,379 - __main__ - INFO -     ABIDJAN: 3 lignes (tonnage=3, teus=1)
+2025-12-04 21:04:12,383 - __main__ - INFO -     LOME: 3 lignes (tonnage=3, teus=1)
+2025-12-04 21:04:12,384 - __main__ - INFO -     PAC: 1 lignes (tonnage=1, teus=0)
+2025-12-04 21:04:12,385 - __main__ - INFO -     TEMA: 3 lignes (tonnage=0, teus=3)
+2025-12-04 21:04:12,391 - __main__ - INFO -     VERIFIED: 8
+2025-12-04 21:04:12,392 - __main__ - INFO -     ESTIMATED: 2
+2025-12-04 21:04:12,401 - __main__ - INFO - 
+======================================================================
+2025-12-04 21:04:12,401 - __main__ - INFO - SAUVEGARDE DONNÉES NETTOYÉES
+2025-12-04 21:04:12,401 - __main__ - INFO - ======================================================================
+2025-12-04 21:04:12,417 - __main__ - INFO -   Taille: 10 lignes, 21 colonnes
+2025-12-04 21:04:12,424 - __main__ - INFO - 
+======================================================================
+2025-12-04 21:04:12,425 - __main__ - INFO - RÉSUMÉ NETTOYAGE
+2025-12-04 21:04:12,425 - __main__ - INFO - ======================================================================
+2025-12-04 21:04:12,426 - __main__ - INFO - 
+AVANT NETTOYAGE:
+2025-12-04 21:04:12,427 - __main__ - INFO -   Lignes: 14
+2025-12-04 21:04:12,427 - __main__ - INFO -   Ports: 5 ['PAC', 'TEMA', 'LOME', 'ABIDJAN', 'LAGOS']
+2025-12-04 21:04:12,427 - __main__ - INFO -   Quality: {'VERIFIED': 9, 'ESTIMATED': 5}
+2025-12-04 21:04:12,428 - __main__ - INFO - 
+APRÈS NETTOYAGE:
+2025-12-04 21:04:12,428 - __main__ - INFO -   Lignes: 10
+2025-12-04 21:04:12,429 - __main__ - INFO -   Ports: 4 ['ABIDJAN', 'LOME', 'PAC', 'TEMA']
+2025-12-04 21:04:12,430 - __main__ - INFO -   Quality: {'VERIFIED': 8, 'ESTIMATED': 2}
+2025-12-04 21:04:12,431 - __main__ - INFO - 
+MÉTADONNÉES ENRICHIES:
+2025-12-04 21:04:12,432 - __main__ - INFO -   Lignes avec tonnage: 7/10
+2025-12-04 21:04:12,432 - __main__ - INFO -   Lignes avec TEU: 5/10
+2025-12-04 21:04:12,433 - __main__ - INFO - 
+ACTIONS EXÉCUTÉES:
+2025-12-04 21:04:12,433 - __main__ - INFO -   [1] remove_lagos
+2025-12-04 21:04:12,443 - __main__ - INFO -   [2] clean_pac_temporal
+2025-12-04 21:04:12,470 - __main__ - INFO -   [3] check_duplicates

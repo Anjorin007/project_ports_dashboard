@@ -1,0 +1,42 @@
+# dbt_project.yml
+# Configuration centrale du projet dbt
+
+name: 'ports_dashboard'
+version: '1.0.0'
+config-version: 2
+
+profile: 'ports_dashboard'
+
+model-paths: ['models']
+analysis-paths: ['analyses']
+test-paths: ['tests']
+seed-paths: ['data']
+macro-paths: ['macros']
+snapshot-paths: ['snapshots']
+
+target-path: 'target'
+clean-targets:
+  - 'target'
+  - 'dbt_packages'
+
+models:
+  ports_dashboard:
+    staging:
+      materialized: view
+      tags: ['staging']
+    marts:
+      materialized: table
+      tags: ['marts']
+
+seeds:
+  ports_dashboard:
+    schema: public
+    database: null
+    quote_columns: false
+
+vars:
+  min_year: 2020
+  max_year: 2024
+  ports_to_analyze: ['ABIDJAN', 'LOME', 'PAC', 'TEMA']
+  min_verified_ratio: 0.70
+  streamlit_schema: 'marts'
