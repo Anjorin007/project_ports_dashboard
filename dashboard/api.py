@@ -119,154 +119,23 @@ def get_cached_data():
 # ENDPOINTS API
 # ============================================================================
 
+@app.route('/', methods=['GET'])
+def index():
+    """Page d'accueil"""
+    return jsonify({
+        "message": "🌊 West Africa Ports Dashboard API",
+        "status": "running",
+        "endpoints": {
+            "health": "GET /api/health",
+            "summary": "GET /api/ports/summary",
+            "comparison": "GET /api/ports/comparison",
+            "trends": "GET /api/ports/trends",
+            "chat": "POST /api/groq/chat",
+            "insights": "GET /api/groq/insights"
+        }
+    })
+
 @app.route('/api/health', methods=['GET'])
 def health():
     """Health check"""
     return jsonify({"status": "ok"})
-
-@app.route('/api/ports/summary', methods=['GET'])
-def get_summary():
-    """Résumé annuel tous ports"""
-    data = get_cached_data()
-    return jsonify(data['summary'])
-
-@app.route('/api/ports/comparison', methods=['GET'])
-def get_comparison():
-    """Comparaison ports"""
-    data = get_cached_data()
-    return jsonify(data['comparison'])
-
-@app.route('/api/ports/trends', methods=['GET'])
-def get_trends():
-    """Tendances"""
-    data = get_cached_data()
-    return jsonify(data['trends'])
-
-@app.route('/api/groq/chat', methods=['POST'])
-def groq_chat():
-    """Chat Groq - réponse complète d'un coup"""
-    try:
-        user_message = request.json.get('message', '')
-        cached_data = get_cached_data()
-        
-        # Contexte pour Groq
-        trends_str = json.dumps(cached_data['trends'][:5]) if cached_data['trends'] else "{}"
-        
-        context = f"""Tu es expert stratégique ports Afrique Ouest.
-
-PORTS:
-- PAC Cotonou (Bénin): Port petit, 2M tonnes, besoin différenciation
-- Lomé (Togo): Leader #1, 20M tonnes, hub régional
-- Abidjan (Côte d'Ivoire): #2, infrastructure moderne, hinterland Mali/Burkina
-- Tema (Ghana): #3, hub conteneurs, 1.2M TEU
-- Lagos (Nigeria): #5, 8M tonnes, congestion
-
-DONNÉES 2024:
-{trends_str}
-
-INSTRUCTIONS:
-- Réponse NATURELLE, fluide, pas de liste
-- Utilise chiffres pour illustrer
-- Bref mais riche (max 150 mots)
-- Pour PAC: toujours une opportunité
-- Max 3 émojis
-
-QUESTION: {user_message}"""
-        
-        # Appel Groq
-        response = groq_client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[{"role": "user", "content": context}],
-            temperature=0.7,
-            max_tokens=500,
-            stream=False
-        )
-        
-        answer = response.choices[0].message.content.strip()
-        
-        # Nettoyage
-        answer = re.sub(r'\*\*(.*?)\*\*', r'\1', answer)
-        answer = re.sub(r'<[^>]+>', '', answer)
-        
-        return jsonify({"response": answer})
-        
-    except Exception as e:
-        print(f"❌ Groq Error: {e}")
-        return jsonify({"response": f"Erreur: {str(e)}"})
-
-@app.route('/api/groq/insights', methods=['GET'])
-def generate_insights():
-    """Génère 3 insights"""
-    try:
-        cached_data = get_cached_data()
-        trends_str = json.dumps(cached_data['trends'][:5]) if cached_data['trends'] else "{}"
-        
-        prompt = f"""Analyste stratégique ports Afrique Ouest.
-
-DONNÉES:
-{trends_str}
-
-Génère 3 insights COURTS (1 phrase max):
-
-🔥 Insight positif/croissance
-⚠️ Alerte/risque
-💡 Action concrète pour PAC
-
-Format: 3 lignes simples, chiffres spécifiques."""
-        
-        response = groq_client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,
-            max_tokens=250,
-            stream=False
-        )
-        
-        text = response.choices[0].message.content.strip()
-        
-        # Parse: trouve les lignes avec emoji
-        insights = []
-        for line in text.split('\n'):
-            line = line.strip()
-            if line and line[0] in '🔥⚠️💡':
-                insights.append(line)
-        
-        # Fallback si parsing échoue
-        if not insights:
-            insights = [
-                "🔥 Croissance conteneurs Afrique Ouest +12% annuel",
-                "⚠️ PAC perd parts marché vs 2023",
-                "💡 PAC doit spécialiser en terminal conteneurs"
-            ]
-        
-        return jsonify({"insights": insights[:3]})
-        
-    except Exception as e:
-        print(f"❌ Insights Error: {e}")
-        return jsonify({"insights": [
-            "🔥 Croissance conteneurs +12% annuel",
-            "⚠️ Congestion Lagos impact régionalisation",
-            "💡 Opportunité pour PAC: spécialisation"
-        ]})
-
-# ============================================================================
-# MAIN
-# ============================================================================
-
-if __name__ == '__main__':
-    print("\n" + "="*70)
-    print("🌊 WEST AFRICA PORTS API")
-    print("="*70)
-    print("✅ Decimal convertis AVANT JSON (convert_decimals)")
-    print("✅ Groq réponses complètes fluides")
-    print("✅ Cache de données optimisé")
-    print("="*70)
-    print("Endpoints:")
-    print("  POST /api/groq/chat")
-    print("  GET  /api/groq/insights")
-    print("  GET  /api/ports/summary")
-    print("  GET  /api/ports/comparison")
-    print("  GET  /api/ports/trends")
-    print("="*70 + "\n")
-    
-    app.run(host='0.0.0.0', port=5000, debug=True)
