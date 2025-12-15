@@ -24,5 +24,5 @@ COPY *.py .
 # Expose port
 EXPOSE 8080
 
-# Run gunicorn
+# Run gunicorn with hardcoded port for Railway
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:8080", "dashboard.api:app", "--timeout", "120"]
