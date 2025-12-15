@@ -1,1 +1,1 @@
-web: gunicorn --workers 4 --bind 0.0.0.0:$PORT dashboard.api:app --timeout 120
+web: cd frontend && npm run build && cd .. && gunicorn --workers 4 --bind 0.0.0.0:$PORT dashboard.api:app --timeout 120

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, ScatterChart, Scatter, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ComposedChart } from 'recharts';
 import { Send, Ship, Brain, Loader } from 'lucide-react';
 
-const API_BASE = 'http://localhost:5000/api';
+// ✅ CORRIGÉ : Utilise window.location.origin (fonctionne en production)
+const API_BASE = window.location.origin + '/api';
 
 const PortsDashboard = () => {
   const [currentPage, setCurrentPage] = useState('overview');
@@ -444,7 +445,7 @@ const PortsDashboard = () => {
                 fontSize: '0.95rem',
                 wordWrap: 'break-word'
               }}>
-                {msg.content || (msg.fullContent?.substring(0, typingChars))}
+                {msg.content}
               </div>
             </div>
           ))
@@ -514,7 +515,6 @@ const PortsDashboard = () => {
             }}
             onFocus={(e) => e.target.style.borderColor = 'rgba(6, 182, 212, 0.8)'}
             onBlur={(e) => e.target.style.borderColor = 'rgba(6, 182, 212, 0.3)'}
-            disabled={loading}
           />
           <button
             onClick={() => handleSendMessage()}
@@ -604,4 +604,4 @@ const PortsDashboard = () => {
   );
 };
 
-export default PortsDashboard;
+export default PortsDashboard

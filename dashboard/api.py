@@ -2,9 +2,10 @@
 Flask API pour West Africa Ports Dashboard
 ✅ Decimal CORRIGÉ (conversion avant JSON)
 ✅ Groq réponses complètes fluides
+✅ Serveur frontend React intégré
 """
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import psycopg2
 from psycopg2 import pool
@@ -15,10 +16,16 @@ from groq import Groq
 import json
 import re
 from decimal import Decimal
+from pathlib import Path
 
 load_dotenv()
 
-app = Flask(__name__)
+# Configuration Flask avec dossier statique du frontend
+app = Flask(
+    __name__,
+    static_folder=os.path.join(os.path.dirname(__file__), '..', 'frontend', 'dist'),
+    static_url_path=''
+)
 CORS(app)
 
 # ============================================================================
@@ -119,12 +126,12 @@ def get_cached_data():
 # ENDPOINTS API
 # ============================================================================
 
-@app.route('/', methods=['GET'])
-def index():
-    """Page d'accueil"""
+@app.route('/api/health', methods=['GET'])
+def health():
+    """Health check"""
     return jsonify({
-        "message": "🌊 West Africa Ports Dashboard API",
-        "status": "running",
+        "status": "ok",
+        "message": "API du tableau de bord des ports d'Afrique de l'Ouest",
         "endpoints": {
             "health": "GET /api/health",
             "summary": "GET /api/ports/summary",
@@ -135,7 +142,108 @@ def index():
         }
     })
 
-@app.route('/api/health', methods=['GET'])
-def health():
-    """Health check"""
-    return jsonify({"status": "ok"})
+@app.route('/api/ports/summary', methods=['GET'])
+def ports_summary():
+    """Résumé ports"""
+    data = get_cached_data()
+    return jsonify(data['summary'])
+
+@app.route('/api/ports/comparison', methods=['GET'])
+def ports_comparison():
+    """Comparaison ports"""
+    data = get_cached_data()
+    return jsonify(data['comparison'])
+
+@app.route('/api/ports/trends', methods=['GET'])
+def ports_trends():
+    """Tendances ports"""
+    data = get_cached_data()
+    return jsonify(data['trends'])
+
+@app.route('/api/groq/insights', methods=['GET'])
+def groq_insights():
+    """Génère insights IA"""
+    try:
+        data = get_cached_data()
+        prompt = f"""Analysez ces données de ports d'Afrique de l'Ouest et donnez 3 insights clés:
+        {json.dumps(data['comparison'][:5])}
+        
+        Répondez UNIQUEMENT avec 3 points clés, sans liste numérotée."""
+        
+        response = groq_client.chat.completions.create(
+            model="mixtral-8x7b-32768",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+            max_tokens=300
+        )
+        
+        text = response.choices[0].message.content
+        insights = [s.strip() for s in text.split('\n') if s.strip()][:3]
+        
+        return jsonify({"insights": insights})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/groq/chat', methods=['POST'])
+def groq_chat():
+    """Chat IA avec Groq"""
+    try:
+        data = request.get_json()
+        user_message = data.get('message', '')
+        
+        if not user_message:
+            return jsonify({"error": "Message vide"}), 400
+        
+        # Contexte données
+        cache_data = get_cached_data()
+        context = f"Vous êtes expert en logistique portuaire. Voici les données: {json.dumps(cache_data['comparison'][:5])}"
+        
+        response = groq_client.chat.completions.create(
+            model="mixtral-8x7b-32768",
+            messages=[
+                {"role": "system", "content": context},
+                {"role": "user", "content": user_message}
+            ],
+            temperature=0.7,
+            max_tokens=1000
+        )
+        
+        reply = response.choices[0].message.content
+        return jsonify({"response": reply})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# ============================================================================
+# SERVIR LE FRONTEND REACT
+# ============================================================================
+
+@app.route('/', methods=['GET'])
+def serve_index():
+    """Servir index.html du frontend"""
+    dist_folder = app.static_folder
+    if os.path.exists(os.path.join(dist_folder, 'index.html')):
+        return send_from_directory(dist_folder, 'index.html')
+    return jsonify({"message": "Frontend not built. Run: cd frontend && npm run build"}), 404
+
+@app.route('/<path:path>', methods=['GET'])
+def serve_static(path):
+    """Servir fichiers statiques ou rediriger vers index.html (React Router)"""
+    dist_folder = app.static_folder
+    file_path = os.path.join(dist_folder, path)
+    
+    if os.path.exists(file_path) and os.path.isfile(file_path):
+        return send_from_directory(dist_folder, path)
+    
+    # Fallback vers index.html pour React Router
+    if os.path.exists(os.path.join(dist_folder, 'index.html')):
+        return send_from_directory(dist_folder, 'index.html')
+    
+    return jsonify({"error": "Not found"}), 404
+
+# ============================================================================
+# DÉMARRAGE
+# ============================================================================
+
+if __name__ == '__main__':
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
